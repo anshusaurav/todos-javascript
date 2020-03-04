@@ -72,6 +72,7 @@ textarea {
 	outline: 0;
 	box-shadow: none;
 	background-color: transparent;
+	border: none;
 }
 
 img {
@@ -80,14 +81,47 @@ img {
 }
 body{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	background-color: #F5F5F5;
 }
 h1{
-    text-align: center;
+	text-align: center;
+	font-size: 6.3rem;
+	font-weight: 500;
+	color: #EAD7D7
 }
 ul{
     padding-left: 0;
 }
 /*New CSS*/
+.top-elem{
+	display: grid;
+	grid-template-columns: 1fr 11fr;
+	box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03),-1px -2px 40px -8px rgba(204,202,202,1);;
+
+}
+.top-label{
+	
+	font-size: 3rem;
+	letter-spacing: 1rem;
+	transform:scale(1.4,1); /* W3C */
+	padding: 0 18px;
+	padding-bottom: 12px;
+	color: #E6E6E6;
+	background-color: #FEFEFE;  
+}
+.inp-main{
+	line-height: 2.0;
+	padding: 16px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 2rem;
+	background-color: #FEFEFE;
+	}
+.inp-main::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+	color: #E6E6E6;
+	font-size: 2rem;
+	font-style: italic;
+	opacity: 1; /* Firefox */
+  }
 .button-section{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -102,10 +136,23 @@ ul{
     margin: 0 auto;
 }
 .flip-flop {
-    
     border-radius: 50%;
-    border: 1px solid wheat;
+	border: 1px solid wheat;
+	width: 2rem;
+	height: 2rem;
+	margin-left: 6px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+	-webkit-appearance: none;
+	-mozkit-appearance: none;
+    outline: none;
+    cursor: pointer;
 }
+
+.flip-flop:checked {
+    
+}
+
 .todo-element{
     list-style: none;
 }
@@ -119,5 +166,5 @@ a:hover{
 
 }
 .delete-button {
-border: none;
+	border: none;
 }

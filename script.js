@@ -13,20 +13,31 @@ document.body.append(headerElem);
 
 
 let mainElem = document.createElement('div');
+let topElem = document.createElement('div');
+topElem.classList.add('top-elem');
+let labelTopElem = document.createElement('label');
+labelTopElem.classList.add('top-label');
+labelTopElem.innerHTML = '';
 let inputElement = document.createElement('input');
+inputElement.classList.add('inp-main');
 inputElement.type = 'text';
 inputElement.placeholder = 'What needs to be done?';
-mainElem.append(inputElement);
+topElem.append(labelTopElem, inputElement);
+mainElem.append(topElem);
 document.body.append(mainElem);
 mainElem.classList.add("container");
 let ulElem = document.createElement('ul')
 mainElem.append(ulElem);
+
 inputElement.addEventListener('keyup',addTodo);
 
 
 let buttonDiv = document.createElement('div');
 buttonDiv.classList.add('button-section');
 let labelElem = document.createElement('label');
+if(todoAll.length > 1)
+labelElem.innerHTML = `${todoAll.length} item left`;
+else
 labelElem.innerHTML = `${todoAll.length} items left`;
 let mainButtonDiv = document.createElement('div');
 mainButtonDiv.classList.add('main-buttons');
@@ -81,8 +92,12 @@ function addTodo(event) {
             fillCompletedTodo();
             inputElement.value = '';
             inputElement.placeholder = 'What needs to be done?';
-            labelElem.innerHTML = `${cntActive()} items left`;
+            if(cntActive() > 1)
+                labelElem.innerHTML = `${cntActive()} items left`;
+            else
+            labelElem.innerHTML = `${cntActive()} item left`;
             console.log("HERE to print: "  +inputElement.value);
+            labelTopElem.innerHTML = ' &#8964';
         }
         if(!start) {
             fillAllTodo();
@@ -209,7 +224,10 @@ function makeButtonsWorking(){
                     (indArrCompleted[index])['status'] = 'active';
             }
             //fillAllHandler(e);
-            labelElem.innerHTML = `${cntActive()} items left`;
+            if(cntActive() > 1)
+                labelElem.innerHTML = `${cntActive()} items left`;
+            else
+            labelElem.innerHTML = `${cntActive()} item left`;
         });
     });
     let todoFieldReplElemArr = document.body.querySelectorAll('.todo-field-repl');
