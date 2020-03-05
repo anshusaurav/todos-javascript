@@ -7,6 +7,7 @@ let h1Elem = document.createElement('h1');
 var str = 'todos';
 h1Elem.innerHTML = str;
 let start = false;
+let selectAllBoolean = false;
 headerElem.classList.add("container");
 headerElem.append(h1Elem);
 document.body.append(headerElem);
@@ -260,7 +261,16 @@ function clearCompletedHandler(event){
     else if(boolCompleted) {
         fillCompletedHandler(event);
     }
-        
+    var cnt = todoAll.reduce((acc, elem ) => {
+        if(elem['status'] == 'completed')
+        acc++;
+        return acc;
+    },0);
+    if(cnt == todoAll.length) {
+        buttonDiv.style.display = 'none';
+        labelTopElem.innerHTML = '';
+    }
+
 }
 function makeButtonsWorking(){
     let flipflopElemArr = document.body.querySelectorAll('.flip-flop');
@@ -356,3 +366,4 @@ function makeButtonsWorking(){
         });
     });
 }
+document.body.style.zoom = 1.0
