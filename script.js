@@ -35,6 +35,7 @@ inputElement.addEventListener('keyup',addTodo);
 let buttonDiv = document.createElement('div');
 buttonDiv.classList.add('button-section');
 let labelElem = document.createElement('label');
+labelElem.classList.add('counter-label');
 if(todoAll.length > 1)
 labelElem.innerHTML = `${todoAll.length} item left`;
 else
@@ -47,18 +48,23 @@ let allButton = document.createElement('button');
 allButton.innerHTML = 'All';
 
 allButton.addEventListener('click', fillAllHandler);
+allButton.classList.add('footer-btn');
 let activeButton = document.createElement('button');
 activeButton.innerHTML = 'Active'; 
+activeButton.classList.add('footer-btn');
 activeButton.addEventListener('click', fillActiveHandler);
 let completedButton = document.createElement('button');
 completedButton.innerHTML = 'Completed'; 
+completedButton.classList.add('footer-btn');
 completedButton.addEventListener('click', fillCompletedHandler);
 
 
 mainButtonDiv.append(allButton, activeButton, completedButton);
 
 let clearButton = document.createElement('a');
-clearButton.innerHTML= 'Clear Completed'; 
+clearButton.innerHTML= 'Clear Completed';
+clearButton.classList.add('clear-button'); 
+clearButton.addEventListener('click', clearCompletedHandler);
 buttonDiv.append(labelElem, mainButtonDiv, clearButton );
 mainElem.append(buttonDiv);
 buttonDiv.style.display = 'none';
@@ -79,7 +85,7 @@ function addTodo(event) {
     console.log(inputElement.value);
     if(event.keyCode == 13) 
     {
-        buttonDiv.style.display = 'block';
+        buttonDiv.style.display = 'grid';
         let newTodo = {};
         newTodo['text'] = inputElement.value.trim();
         newTodo['status'] = 'active';
@@ -123,10 +129,10 @@ function generateHTML(todoObj) {
     
     flipflopElem.type = 'checkbox';
     flipflopElem.classList.add('flip-flop');
-    if(todoObj['status'] === 'active')
-        flipflopElem.checked = false;
-    else
-        flipflopElem.checked = true;
+    // if(todoObj['status'] == 'active')
+    //     flipflopElem.checked = false;
+    // else
+    //     flipflopElem.checked = true;
     
     deleteTodoButtonElem.textContent = 'X';
     deleteTodoButtonElem.classList.add('delete-button');
@@ -144,6 +150,10 @@ function generateHTML(todoObj) {
 function fillAllHandler(event) {
     fillAllTodo();
     boolAll = true, boolActive = false, boolCompleted = false;
+    todoAll.forEach(elem =>{
+        console.log(elem['text'] + " " +elem['status']);
+    });
+   
 }
 function fillAllTodo() {
     ulElem.innerHTML = '';
@@ -152,11 +162,40 @@ function fillAllTodo() {
         liElem.innerHTML = generateHTML(todoAll[i]);//REPLACE THIS LINE EVRYWHEEE
         ulElem.append(liElem);
     }
+    let elmArr = document.body.querySelectorAll('li');
+    elmArr.forEach((elem, index) =>{
+        
+        let tiktokElem = elem.querySelector('.flip-flop');
+        //console.log(tiktokElem.checked);
+        if(todoAll[index]['status'] == 'active')
+            tiktokElem.checked = false;
+        else
+            tiktokElem.checked = true;  
+    });
     makeButtonsWorking();
 }
 function fillActiveHandler(event) {
     fillActiveTodo();
     boolAll = false, boolActive = true, boolCompleted = false;
+    todoAll.forEach(elem =>{
+        if(elem['status'] == 'active')
+            console.log(elem['text'] + " " +elem['status']);
+    });
+    let elmArr = document.body.querySelectorAll('li');
+    var indArrActive = todoAll.reduce((acc, ele, indexNew) =>{
+        if(ele['status'] == 'active')
+        acc.push(indexNew);
+        return acc;
+    },[]);
+    elmArr.forEach((elem, index) =>{
+        
+        let tiktokElem = elem.querySelector('.flip-flop');
+        //console.log(tiktokElem.checked);
+        if(todoAll[indArrActive[index]]['status'] == 'active')
+            tiktokElem.checked = false;
+        else
+            tiktokElem.checked = true;  
+    });
 }
 function fillActiveTodo() {
     ulElem.innerHTML = '';
@@ -173,6 +212,25 @@ function fillActiveTodo() {
 function fillCompletedHandler(event) {
     fillCompletedTodo();
     boolAll = false, boolActive = false, boolCompleted = true;
+    todoAll.forEach(elem =>{
+        if(elem['status'] == 'completed')
+            console.log(elem['text'] + " " +elem['status']);
+    });
+    let elmArr = document.body.querySelectorAll('li');
+    var indArrCompleted = todoAll.reduce((acc, ele, indexNew) =>{
+        if(ele['status'] == 'completed')
+        acc.push(indexNew);
+        return acc;
+    },[]);
+    elmArr.forEach((elem, index) =>{
+        
+        let tiktokElem = elem.querySelector('.flip-flop');
+        //console.log(tiktokElem.checked);
+        if(todoAll[indArrCompleted[index]]['status'] == 'active')
+            tiktokElem.checked = false;
+        else
+            tiktokElem.checked = true;  
+    });
 }
 function fillCompletedTodo() {
     ulElem.innerHTML = '';
@@ -185,6 +243,24 @@ function fillCompletedTodo() {
         }
     }
     makeButtonsWorking();
+}
+function clearCompletedHandler(event){
+    todoAll = todoAll.reduce((acc, elem) =>{
+        if(elem['status'] == 'active')
+            acc.push(elem);
+        return acc;
+    },[]);
+    
+    if(boolAll) {
+        fillAllHandler(event);
+    }
+    else if(boolActive) {
+        fillActiveHandler(event);
+    }
+    else if(boolCompleted) {
+        fillCompletedHandler(event);
+    }
+        
 }
 function makeButtonsWorking(){
     let flipflopElemArr = document.body.querySelectorAll('.flip-flop');
@@ -254,16 +330,29 @@ function makeButtonsWorking(){
         });
         
     });
-    clearButton.addEventListener('click', function(e){
-        todoAll = todoAll.reduce((acc, elem) =>{
-            if(elem['status'] == 'active')
-                acc.push(elem);
-            return acc;
-        },[]);
-        fillAllTodo();
-        fillActiveTodo();
-        fillCompletedTodo();
-    });
     
-   
+    let removeTodoElemArr = document.body.querySelectorAll('.delete-button');
+    removeTodoElemArr.forEach((elem,index) => {
+        elem.addEventListener('click', function(e, index){
+            console.log("Initial: " + todoAll.length);
+            todoAll.splice(index, 1);
+            console.log("Final: " +todoAll.length);
+            let liEl = elem.parentElement;
+            
+            console.log(todoAll.length);
+            let counterElem = document.body.querySelector('.counter-label');
+            var cnt = todoAll.reduce((acc,ele,ind) =>{
+                //console.log(ind + " " + ele['status']);
+                if(ele['status'] == 'active')
+                    acc++;
+                return acc;
+            },0);
+            //console.log(cnt);
+            if(cnt > 1)
+                counterElem.innerHTML = `${cnt} items left`;
+            else 
+                counterElem.innerHTML = `${cnt} item left`;
+            liEl.style.display= 'none';
+        });
+    });
 }

@@ -97,21 +97,24 @@ ul{
 	display: grid;
 	grid-template-columns: 1fr 11fr;
 	box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03),-1px -2px 40px -8px rgba(204,202,202,1);;
-
+	border-bottom: 1px solid #E6E6E6;
 }
 .top-label{
 	
 	font-size: 3rem;
 	letter-spacing: 1rem;
-	transform:scale(1.4,1); /* W3C */
+	
 	padding: 0 18px;
 	padding-bottom: 12px;
 	color: #E6E6E6;
 	background-color: #FEFEFE;  
 }
+top-label:hover{
+	cursor: pointer;
+}
 .inp-main{
 	line-height: 2.0;
-	padding: 16px;
+	padding:  4px 16px;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 2rem;
 	background-color: #FEFEFE;
@@ -124,41 +127,94 @@ ul{
   }
 .button-section{
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+	grid-template-columns: 1fr 2fr 1.5fr;
+	grid-gap: 100px;
     align-content: space-between;
 }
 .main-buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 2px;
+}
+.footer-btn {
+	margin: 10px 0;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	border: 1px solid #EAD7D7;
+	border-radius: 2px;
+	height: 28px;
+}
+.footer-btn:hover {
+	background-color: #FEFEFE;
+	border: 1px solid rgb(226, 152, 152);
 }
 .container{
     width: 600px;
     margin: 0 auto;
 }
 .flip-flop {
-    border-radius: 50%;
-	border: 1px solid wheat;
+	border-radius: 50%;
+	margin: 1rem 0;		
+	/* border: 1px solid rgb(83, 81, 77); */
 	width: 2rem;
 	height: 2rem;
-	margin-left: 6px;
-    vertical-align: middle;
-    border: 1px solid #ddd;
-	-webkit-appearance: none;
-	-mozkit-appearance: none;
-    outline: none;
-    cursor: pointer;
 }
-
+input[type="checkbox"]{
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: #FFF;
+    width: 40px;
+    height: 40px;
+	/* border: none; */
+	border: 1px solid rgb(211, 207, 199);
+    position: relative;	
+}
+input[type="checkbox"]:checked {
+	background: #FFF;
+	border: 1px solid rgb(168, 219, 174);
+}
+input[type="checkbox"]:checked:after {
+    /* tick Unicode. */
+	content: "\2713";
+	font-size: 1.5rem;
+    color: rgb(0, 95, 13); 
+    /* The following positions my tick in the center, 
+     * but you could just overlay the entire box
+     * with a full after element with a background if you want to */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    /*
+     * If you want to fully change the check appearance, use the following:
+     * content: " ";
+     * width: 100%;
+     * height: 100%;
+     * background: blue;
+     * top: 0;
+     * left: 0;
+     */
+}
 .flip-flop:checked {
     
 }
 
 .todo-element{
-    list-style: none;
+	list-style: none;
+	border-bottom: 1px solid #ededed;
+}
+.todo-field-repl{
+	text-align: center;
+	padding: 16px 0 8px 0;
+	font-size: 1.5rem;
 }
 .todo-item{
     display: grid;
     grid-template-columns: 1fr 10fr 1fr;
+	border-bottom: 1px solid #E6E6E6;
+	/* background-color: white; */
     
 }
 a:hover{
@@ -167,4 +223,16 @@ a:hover{
 }
 .delete-button {
 	border: none;
+	color: #cc9a9a;
+	transition: color 0.2s ease-out;
+}
+.counter-label{
+	padding: 12px 0;
+	font-size: 1rem;
+	font-weight: 500;
+}
+.clear-button{
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 0.8rem;
+	padding: 12px 0;
 }
