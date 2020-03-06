@@ -128,6 +128,7 @@ top-label:hover{
 .button-section{
     display: grid;
 	grid-template-columns: 1fr 2fr 1.5fr;
+	background-color: white;
 	grid-gap: 100px;
     align-content: space-between;
 }
@@ -151,19 +152,13 @@ top-label:hover{
     width: 600px;
     margin: 0 auto;
 }
-.flip-flop {
-	border-radius: 50%;
-	margin: 1rem 0;		
-	/* border: 1px solid rgb(83, 81, 77); */
-	width: 2rem;
-	height: 2rem;
-}
+
 input[type="checkbox"]{
     -webkit-appearance: initial;
     appearance: initial;
     background: #FFF;
     width: 40px;
-    height: 40px;
+	height: 40px;
 	/* border: none; */
 	border: 1px solid rgb(211, 207, 199);
     position: relative;	
@@ -187,19 +182,35 @@ input[type="checkbox"]:checked:after {
     -moz-transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
-    /*
-     * If you want to fully change the check appearance, use the following:
-     * content: " ";
-     * width: 100%;
-     * height: 100%;
-     * background: blue;
-     * top: 0;
-     * left: 0;
-     */
-}
-.flip-flop:checked {
+    
+     /* content: " ";
+     width: 100%;
+     height: 100%;
+     background: blue;
+     top: 0;
+     left: 0; */
     
 }
+.flip-flop {
+	border-radius: 50%;
+	margin: 1rem 0;		
+	/* border: 1px solid rgb(83, 81, 77); */
+	width: 2rem;
+	margin-left: 16px;
+	height: 2rem;
+}
+.flip-flop:checked ~ .todo-field-repl {
+	text-decoration: line-through;
+	text-decoration-color: seagreen;
+	color: #777;
+}
+.top-label {
+	border: none;
+	font-size: 2.5rem;
+	padding-left: 30px;
+	padding-top: 12px;
+}
+
 
 .todo-element{
 	list-style: none;
@@ -209,12 +220,21 @@ input[type="checkbox"]:checked:after {
 	text-align: center;
 	padding: 16px 0 8px 0;
 	font-size: 1.5rem;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	
+}
+.todo-text-Field {
+	text-align: center;
+	padding: 16px 0 8px 0;
+	font-size: 1.5rem;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	
 }
 .todo-item{
     display: grid;
     grid-template-columns: 1fr 10fr 1fr;
 	border-bottom: 1px solid #E6E6E6;
-	/* background-color: white; */
+	background-color: white;
     
 }
 a:hover{
@@ -228,8 +248,9 @@ a:hover{
 }
 .counter-label{
 	padding: 12px 0;
-	font-size: 1rem;
+	font-size: 0.8rem;
 	font-weight: 500;
+	margin-left: 12px;
 }
 .clear-button{
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

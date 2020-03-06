@@ -18,6 +18,7 @@ let topElem = document.createElement('div');
 topElem.classList.add('top-elem');
 let labelTopElem = document.createElement('label');
 labelTopElem.classList.add('top-label');
+labelTopElem.addEventListener('click', toggleAll);
 labelTopElem.innerHTML = '';
 let inputElement = document.createElement('input');
 inputElement.classList.add('inp-main');
@@ -38,9 +39,9 @@ buttonDiv.classList.add('button-section');
 let labelElem = document.createElement('label');
 labelElem.classList.add('counter-label');
 if(todoAll.length > 1)
-labelElem.innerHTML = `${todoAll.length} item left`;
+    labelElem.innerHTML = `${todoAll.length} item left`;
 else
-labelElem.innerHTML = `${todoAll.length} items left`;
+    labelElem.innerHTML = `${todoAll.length} items left`;
 let mainButtonDiv = document.createElement('div');
 mainButtonDiv.classList.add('main-buttons');
 
@@ -75,6 +76,8 @@ let deleteTodoButtonElem = document.createElement('button');
 let flipflopElem = document.createElement('input');
 let todoFieldRepl = document.createElement('label');
 let todoFieldElem = document.createElement('input');
+let divPreLast = document.createElement('div');
+let divLast = document.createElement('div');
 liElem.classList.add('todo-element');
 liElem.addEventListener('mouseover', function(e){
     deleteTodoButtonElem.style.display ='inline-block';
@@ -104,7 +107,8 @@ function addTodo(event) {
             else
             labelElem.innerHTML = `${cntActive()} item left`;
             console.log("HERE to print: "  +inputElement.value);
-            labelTopElem.innerHTML = ' &#8964';
+            labelTopElem.innerHTML = '  &#709';
+            labelTopElem.style.color = '#999';
         }
         if(!start) {
             fillAllTodo();
@@ -126,15 +130,8 @@ function cntActive() {
 function generateHTML(todoObj) {
     todoItemElem.innerHTML = '';
     todoItemElem.classList.add('todo-item');
-    //liElem.append(todoItemElem);
-    
     flipflopElem.type = 'checkbox';
     flipflopElem.classList.add('flip-flop');
-    // if(todoObj['status'] == 'active')
-    //     flipflopElem.checked = false;
-    // else
-    //     flipflopElem.checked = true;
-    
     deleteTodoButtonElem.textContent = 'X';
     deleteTodoButtonElem.classList.add('delete-button');
     todoItemElem.value =  todoObj['text'];
@@ -148,6 +145,9 @@ function generateHTML(todoObj) {
     todoItemElem.append(flipflopElem,todoFieldRepl, todoFieldElem, deleteTodoButtonElem);
     return todoItemElem.outerHTML;
 }
+function generateStyleDivs() {
+    
+}
 function fillAllHandler(event) {
     fillAllTodo();
     boolAll = true, boolActive = false, boolCompleted = false;
@@ -160,14 +160,14 @@ function fillAllTodo() {
     ulElem.innerHTML = '';
     for(var i = 0; i < todoAll.length; i++) {
         let liElem = document.createElement('li');
-        liElem.innerHTML = generateHTML(todoAll[i]);//REPLACE THIS LINE EVRYWHEEE
+        liElem.innerHTML = generateHTML(todoAll[i]);
         ulElem.append(liElem);
     }
     let elmArr = document.body.querySelectorAll('li');
     elmArr.forEach((elem, index) =>{
         
         let tiktokElem = elem.querySelector('.flip-flop');
-        //console.log(tiktokElem.checked);
+        
         if(todoAll[index]['status'] == 'active')
             tiktokElem.checked = false;
         else
@@ -272,6 +272,30 @@ function clearCompletedHandler(event){
     }
 
 }
+function toggleAll(event) {
+    selectAllBoolean = !selectAllBoolean;
+    if(selectAllBoolean)
+        todoAll.forEach( elem =>{
+            elem['status'] = 'completed';
+        })
+    else
+    todoAll.forEach( elem =>{
+        elem['status'] = 'active';
+    })
+    if(selectAllBoolean)
+        labelTopElem.style.color = 'rgb(0, 95, 13)'; 
+    else
+        labelTopElem.style.color = '#777';
+    if(boolAll) {
+        fillAllHandler(event);
+    }
+    else if(boolActive) {
+        fillActiveHandler(event);
+    }
+    else if(boolCompleted) {
+        fillCompletedHandler(event);
+    }
+}
 function makeButtonsWorking(){
     let flipflopElemArr = document.body.querySelectorAll('.flip-flop');
     var indArrActive = todoAll.reduce((acc, ele, indexNew) =>{
@@ -363,6 +387,10 @@ function makeButtonsWorking(){
             else 
                 counterElem.innerHTML = `${cnt} item left`;
             liEl.style.display= 'none';
+            if(todoAll.length == 0) {
+                buttonDiv.style.display = 'none';
+                labelTopElem.innerHTML = '';
+            }
         });
     });
 }
