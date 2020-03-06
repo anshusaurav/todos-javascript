@@ -30,10 +30,14 @@ document.body.append(mainElem);
 mainElem.classList.add("container");
 let ulElem = document.createElement('ul')
 mainElem.append(ulElem);
-
 inputElement.addEventListener('keyup',addTodo);
 
-
+let footerElem = document.createElement('div');
+footerElem.classList.add('smallest-container');
+footerElem.innerHTML = `<p>Double click to edit a todo</p>
+                        <p>Written by <a href ='http://www.anshusaurabh.codes' target=' blank'>Anshu Saurabh</a></p>
+                        <p>Inspired by <a href = 'http://todomvc.com/' target=' blank'>Evan You(MVCTodo)</p></p>`;
+document.body.append(footerElem);
 let buttonDiv = document.createElement('div');
 buttonDiv.classList.add('button-section');
 let labelElem = document.createElement('label');
@@ -60,6 +64,12 @@ completedButton.innerHTML = 'Completed';
 completedButton.classList.add('footer-btn');
 completedButton.addEventListener('click', fillCompletedHandler);
 
+let divPreLast = document.createElement('div');
+let divLast = document.createElement('div');
+divPreLast.classList.add('pre-last-div');
+divLast.classList.add('last-div');
+divPreLast.classList.add('medium-container');
+divLast.classList.add('small-container');
 
 mainButtonDiv.append(allButton, activeButton, completedButton);
 
@@ -69,15 +79,19 @@ clearButton.classList.add('clear-button');
 clearButton.addEventListener('click', clearCompletedHandler);
 buttonDiv.append(labelElem, mainButtonDiv, clearButton );
 mainElem.append(buttonDiv);
+mainElem.append(divPreLast);
+mainElem.append(divLast);
 buttonDiv.style.display = 'none';
+divPreLast.style.display = 'none';
+divLast.style.display = 'none';
 let liElem = document.createElement('li');
 let todoItemElem = document.createElement('div');
 let deleteTodoButtonElem = document.createElement('button');
 let flipflopElem = document.createElement('input');
 let todoFieldRepl = document.createElement('label');
 let todoFieldElem = document.createElement('input');
-let divPreLast = document.createElement('div');
-let divLast = document.createElement('div');
+
+
 liElem.classList.add('todo-element');
 liElem.addEventListener('mouseover', function(e){
     deleteTodoButtonElem.style.display ='inline-block';
@@ -90,6 +104,8 @@ function addTodo(event) {
     if(event.keyCode == 13) 
     {
         buttonDiv.style.display = 'grid';
+        divPreLast.style.display = 'block';
+        divLast.style.display = 'block';
         let newTodo = {};
         newTodo['text'] = inputElement.value.trim();
         newTodo['status'] = 'active';
@@ -107,7 +123,7 @@ function addTodo(event) {
             else
             labelElem.innerHTML = `${cntActive()} item left`;
             console.log("HERE to print: "  +inputElement.value);
-            labelTopElem.innerHTML = '  &#709';
+            labelTopElem.innerHTML = '  &#11167';
             labelTopElem.style.color = '#999';
         }
         if(!start) {
@@ -268,6 +284,8 @@ function clearCompletedHandler(event){
     },0);
     if(cnt == todoAll.length) {
         buttonDiv.style.display = 'none';
+        divPreLast.style.display = 'none';
+        divLast.style.display = 'none';
         labelTopElem.innerHTML = '';
     }
 
@@ -389,6 +407,8 @@ function makeButtonsWorking(){
             liEl.style.display= 'none';
             if(todoAll.length == 0) {
                 buttonDiv.style.display = 'none';
+                divPreLast.style.display = 'none';
+                divLast.style.display = 'none';
                 labelTopElem.innerHTML = '';
             }
         });
