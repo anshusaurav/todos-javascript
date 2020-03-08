@@ -23,7 +23,7 @@ labelTopElem.addEventListener('mousedown', function(e){ e.preventDefault(); }, f
 labelTopElem.innerHTML = '';
 let inputElement = document.createElement('input');
 inputElement.classList.add('inp-main');
-inputElement.type = 'text';``
+inputElement.type = 'text';
 inputElement.placeholder = 'What needs to be done?';
 topElem.append(labelTopElem, inputElement);
 mainElem.append(topElem);
@@ -301,6 +301,10 @@ function toggleAll(event) {
     todoAll.forEach( elem =>{
         elem['status'] = 'active';
     })
+    if(cntActive() > 1)
+        labelElem.innerHTML = `${cntActive()} items left`;
+    else
+        labelElem.innerHTML = `${cntActive()} item left`;
     if(selectAllBoolean)
         labelTopElem.style.color = 'rgb(0, 95, 13)'; 
     else
