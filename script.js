@@ -19,10 +19,11 @@ topElem.classList.add('top-elem');
 let labelTopElem = document.createElement('label');
 labelTopElem.classList.add('top-label');
 labelTopElem.addEventListener('click', toggleAll);
+labelTopElem.addEventListener('mousedown', function(e){ e.preventDefault(); }, false);
 labelTopElem.innerHTML = '';
 let inputElement = document.createElement('input');
 inputElement.classList.add('inp-main');
-inputElement.type = 'text';
+inputElement.type = 'text';``
 inputElement.placeholder = 'What needs to be done?';
 topElem.append(labelTopElem, inputElement);
 mainElem.append(topElem);
@@ -360,14 +361,34 @@ function makeButtonsWorking(){
     });
     let todoFieldReplElemArr = document.body.querySelectorAll('.todo-field-repl');
     todoFieldReplElemArr.forEach(elem => {
-        elem.addEventListener('click', function(e){
-        this.style.display='none';
-        let elemNew = elem.parentElement;
-        let elemN = elemNew.querySelector('.todo-text-Field');
-        elemN.innerHTML = elem.textContent;
-        elemN.style.display= 'inline-block';
-        let elemM = elemNew.querySelector('.delete-button');
-        elemM.style.display= 'none';
+        elem.addEventListener('dblclick', function(e){
+        elem.contentEditable=true;
+        elem.style.boxShadow = 'inset 2px 2px 9px 2px rgba(0,0,0,0.75)';
+        elem.style.borderRadius = '12px';
+        
+        //elem.style.border = '1px solid red';
+        
+        });
+        elem.addEventListener('mousedown', function(e){ e.preventDefault(); }, false);
+
+    });
+    todoFieldReplElemArr.forEach((elem,index) => {
+        elem.addEventListener('keydown', function(e){
+            if(e.keyCode == 13) {
+                e.preventDefault();
+                elem.contentEditable=false;
+                console.log(elem.textContent);
+                todoAll[index]['text'] = elem.textContent.trim();
+                if(boolAll) {
+                    fillAllHandler(event);
+                }
+                else if(boolActive) {
+                    fillActiveHandler(event);
+                }
+                else if(boolCompleted) {
+                    fillCompletedHandler(event);
+                }    
+            }
         });
     });
     let liElemArr = document.body.querySelectorAll('li');
